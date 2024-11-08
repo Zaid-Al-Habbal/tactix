@@ -16,13 +16,14 @@ class Author(models.Model):
     last_name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     membership = models.CharField(max_length=1, choices=MEMBERSHIP_CHOICES, default='B')
-    ratedArticles = models.ManyToManyField('Article', through="Rating")
 
     
-
 class Article(models.Model):
     #article columns:
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    #Article wrote by one user:
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name="articles")
+    #people who rate this article:
+    users = models.ManyToManyField(Author, through="Rating")
     title = models.CharField(max_length=255)
     body = models.TextField()
     last_update = models.DateTimeField(auto_now=True)
@@ -30,7 +31,7 @@ class Article(models.Model):
 
 class Comment(models.Model):
     #comment columns:
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name="+")
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name="comments")
     body = models.TextField()
     
