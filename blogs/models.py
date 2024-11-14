@@ -43,8 +43,15 @@ class Comment(models.Model):
 
 class Rating(models.Model):
     #rated columns:
+    STARS = [
+        (1, "Very Bad"),
+        (2, "Bad"),
+        (3, "Good"),
+        (4, "Very Good"),
+        (5, "Perfect")
+    ]
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    num_of_stars = models.IntegerField()
+    num_of_stars = models.IntegerField(choices=STARS)
 
 
