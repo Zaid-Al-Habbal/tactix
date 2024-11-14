@@ -17,6 +17,11 @@ class Author(models.Model):
     email = models.EmailField(unique=True)
     membership = models.CharField(max_length=1, choices=MEMBERSHIP_CHOICES, default='B')
 
+    class Meta:
+        indexes = [
+            models.Index(fields = ['last_name', 'first_name'])
+        ]
+
     
 class Article(models.Model):
     #article columns:
